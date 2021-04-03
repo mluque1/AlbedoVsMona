@@ -1,45 +1,43 @@
 import random
 
+INIT_RECIPES = 1000
+ATTEMPTS = 5000
+
 def get_lucky(prob):
     return 1 if random.randrange(100) < prob else 0
 
-def can_craft():
-    if materials > 3:
-        return True
-    return False
+def can_craft(mat):
+    return mat > 3
 
-def estimate_average():
-    return average/attempts
+def estimate_average(avg):
+    return avg/ATTEMPTS
 
-def ultimatum(name):
-    print(f'{name} obtains on average {estimate_average()} materials with {initial_recipes} initial recipes.')
+def ultimatum(name, avg):
+    print(f'{name} obtains on average {estimate_average(avg)} materials with {INIT_RECIPES} initial recipes.')
 
 
 if __name__ == '__main__':
-    initial_recipes = 1000 #Total number of initial recipes
-    materials = initial_recipes * 3
     random.seed()
-    attempts = 5000
 
     #Albedo
     average = 0.0
-    for i in range(attempts):
+    for i in range(ATTEMPTS):
         total = 0
-        for j in range (initial_recipes):
+        for j in range (INIT_RECIPES):
             total += 1
             total += get_lucky(10)
         average += total
-    ultimatum('Albedo')
+    ultimatum('Albedo', average)
 
 
     #Mona
     average = 0.0
-    for i in range (attempts):
+    for i in range (ATTEMPTS):
         total = 0
-        materials = initial_recipes * 3
-        while can_craft():
+        materials = INIT_RECIPES * 3
+        while can_craft(materials):
             materials -= 3
             total +=1
             materials += get_lucky(25)
         average += total
-    ultimatum('Mona')
+    ultimatum('Mona', average)
